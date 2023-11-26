@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.WebApi", "MangaBox.WebApi\MangaBox.WebApi.csproj", "{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C69B0856-2191-4F95-9302-BE4C425D7231}
+	EndGlobalSection
+EndGlobal

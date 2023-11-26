@@ -1,0 +1,29 @@
+{
+  "paths": [
+    "extensions.sql",
+
+    "Types/manga_attribute.sql",
+    "Types/manga_chapter_progress.sql",
+
+    "Tables/profiles.sql",
+    "Tables/manga.sql",
+    "Tables/manga_chapter.sql",
+    "Tables/manga_progress.sql",
+    "Tables/manga_bookmarks.sql",
+    "Tables/manga_favourites.sql",
+    "Tables/manga_progress.sql",
+    "Tables/manga_cache.sql",
+    "Tables/manga_chapter_cache.sql",
+
+    "Views/manga_attributes.sql",
+    "Views/manga_chapter_progress.sql",
+
+    "Procedures/get_manga.sql",
+    "Procedures/get_manga_filtered.sql",
+    "Procedures/get_touched_manga.sql",
+    "Procedures/toggle_favourite.sql",
+    "Procedures/update_manga_progress_ext.sql",
+    "Procedures/update_manga_stats.sql",
+    "Procedures/update_computed.sql"
+  ]
+}
