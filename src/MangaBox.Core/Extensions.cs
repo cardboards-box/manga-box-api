@@ -49,6 +49,14 @@ public static partial class Extensions
         return string.Join(joiner, input);
     }
 
+    public static string TrimStart(this string input, string trim)
+    {
+        if (input.StartsWith(trim))
+            return input[trim.Length..];
+
+        return input;
+    }
+
     public static bool Expired(this DateTime date, int seconds)
     {
         return date.ToUniversalTime().AddSeconds(seconds) < DateTime.UtcNow;

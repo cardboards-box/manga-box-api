@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.WebApi", "MangaBox.WebApi\MangaBox.WebApi.csproj", "{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaBox.WebApi", "MangaBox.WebApi\MangaBox.WebApi.csproj", "{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Core", "MangaBox.Core\MangaBox.Core.csproj", "{A98B2807-4350-4E47-A3DD-4B3774313C8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Models", "MangaBox.Models\MangaBox.Models.csproj", "{1BC19417-DA8A-4BC9-BDA9-1BF0F6455E7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Database", "MangaBox.Database\MangaBox.Database.csproj", "{45056701-02CB-458B-97FC-D323E57713D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Sources", "MangaBox.Sources\MangaBox.Sources.csproj", "{4014FAF5-479B-4ACB-A12A-F2696390B89A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Tests", "MangaBox.Tests\MangaBox.Tests.csproj", "{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,26 @@ Global
 		{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDD5B76D-FE5E-4F9D-AD9F-84ECD99BB972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A98B2807-4350-4E47-A3DD-4B3774313C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A98B2807-4350-4E47-A3DD-4B3774313C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A98B2807-4350-4E47-A3DD-4B3774313C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A98B2807-4350-4E47-A3DD-4B3774313C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BC19417-DA8A-4BC9-BDA9-1BF0F6455E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BC19417-DA8A-4BC9-BDA9-1BF0F6455E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BC19417-DA8A-4BC9-BDA9-1BF0F6455E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC19417-DA8A-4BC9-BDA9-1BF0F6455E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45056701-02CB-458B-97FC-D323E57713D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45056701-02CB-458B-97FC-D323E57713D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45056701-02CB-458B-97FC-D323E57713D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45056701-02CB-458B-97FC-D323E57713D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4014FAF5-479B-4ACB-A12A-F2696390B89A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4014FAF5-479B-4ACB-A12A-F2696390B89A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4014FAF5-479B-4ACB-A12A-F2696390B89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4014FAF5-479B-4ACB-A12A-F2696390B89A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -28,5 +28,5 @@ public class OrmService : IOrmService
         FakeUpsert = fakeUpsert;
     }
 
-    public IOrmMapQueryable<T> For<T>() where T : DbObject => new OrmMap<T>(Query, Sql);
+    public IOrmMapQueryable<T> For<T>() where T : DbObject => new OrmMap<T>(Query, Sql, FakeUpsert);
 }

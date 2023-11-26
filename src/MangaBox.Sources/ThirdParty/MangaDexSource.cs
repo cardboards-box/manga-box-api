@@ -1,17 +1,93 @@
-﻿using MManga = MangaDexSharp.Manga;
+﻿using MangaDexSharp;
+using MManga = MangaDexSharp.Manga;
 
-namespace MangaBox.Models;
+namespace MangaBox.Sources.ThirdParty;
 
-public static partial class MangaExtensions
+public interface IMangaDexSource : IMangaSource { }
+
+public class MangaDexSource : IMangaDexSource
 {
     public const string DEFAULT_LANG = "en";
     public const string MANGA_DEX_PROVIDER = "mangadex";
     public const string MANGA_DEX_HOME_URL = "https://mangadex.org";
+    public string HomeUrl => MANGA_DEX_HOME_URL;
+    public string Provider => MANGA_DEX_PROVIDER;
 
-    public static string GetHashId(this DbManga manga)
+    private readonly IMangaDex _mangadex;
+
+    public MangaDexSource(IMangaDex mangadex)
     {
-        var regex = StripNonAlphaNumeric();
-        return regex.Replace($"{manga.Provider} {manga.Title}", "").ToLower();
+        _mangadex = mangadex;
+    }
+
+    public async Task<string[]> Pages(string url)
+    {
+        var id = MangaExtensions.IdFromUrl(url);
+        var pages = await _mangadex.Pages.Pages(id);
+        if (pages == null)
+            return Array.Empty<string>();
+
+        return pages.Images;
+    }
+
+    public async Task<ResolvedManga?> Manga(string url)
+    {
+        var id = IdFromUrl(url);
+        var data = await _mangadex.Manga.Get(id, new[]
+        {
+            MangaIncludes.cover_art,
+            MangaIncludes.author,
+            MangaIncludes.artist,
+            MangaIncludes.scanlation_group,
+            MangaIncludes.tag,
+            MangaIncludes.chapter
+        });
+
+        if (data == null || data.Data == null) return null;
+
+        var manga = data.Data;
+
+        var chapters = await GetChapters(id, DEFAULT_LANG)
+            .OrderBy(t => t.Ordinal)
+            .ToArrayAsync();
+
+        var output = Convert(manga);
+        return new ResolvedManga(output, chapters);
+    }
+
+    public bool Match(string url) => url.StartsWith(HomeUrl);
+
+    public async IAsyncEnumerable<DbMangaChapter> GetChapters(string id, params string[] languages)
+    {
+        var filter = new MangaFeedFilter { TranslatedLanguage = languages };
+        while (true)
+        {
+            var chapters = await _mangadex.Manga.Feed(id, filter);
+            if (chapters == null) yield break;
+
+            var sortedChapters = chapters
+                .Data
+                .GroupBy(t => t.Attributes.Chapter + t.Attributes.Volume)
+                .Select(t => t.PreferedOrFirst(t => t.Attributes.TranslatedLanguage == DEFAULT_LANG))
+                .Where(t => t != null)
+                .Select(t => Convert(t!))
+                .OrderBy(t => t.Volume)
+                .OrderBy(t => t.Ordinal);
+
+            foreach (var chap in sortedChapters)
+                yield return chap;
+
+            int current = chapters.Offset + chapters.Limit;
+            if (chapters.Total <= current) yield break;
+
+            filter.Offset = current;
+        }
+    }
+
+    public static string IdFromUrl(string url)
+    {
+        var parts = url.Replace("https://mangadex.org/", "").Split('/', StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length == 2 ? parts.Last() : parts.Skip(1).First();
     }
 
     public static T Convert<T>(MManga manga) where T : DbManga, new()
@@ -87,7 +163,8 @@ public static partial class MangaExtensions
                      .Value).ToArray(),
             Nsfw = nsfwRatings.Contains(manga.Attributes.ContentRating?.ToString() ?? ""),
             Attributes = GetMangaAttributes(manga).ToArray(),
-            SourceCreated = manga.Attributes.CreatedAt
+            SourceCreated = manga.Attributes.CreatedAt,
+            OrdinalVolumeReset = manga.Attributes.ChapterNumbersResetOnNewVolume,
         };
         output.HashId = output.GetHashId();
         return output;
@@ -145,7 +222,4 @@ public static partial class MangaExtensions
     public static DbMangaChapter Convert(Chapter chapter) => Convert<DbMangaChapter>(chapter);
 
     public static DbMangaChapterCache ConvertCache(Chapter chapter) => Convert<DbMangaChapterCache>(chapter);
-
-    [GeneratedRegex("[^a-zA-Z0-9 ]")]
-    private static partial Regex StripNonAlphaNumeric();
 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -9,8 +9,11 @@
   <ItemGroup>
     <PackageReference Include="CardboardBox.Database.Postgres" Version="1.0.2" />
     <PackageReference Include="CardboardBox.Http" Version="2.0.2" />
+    <PackageReference Include="CardboardBox.Http.Files" Version="2.0.1" />
+    <PackageReference Include="CardboardBox.Http.Html" Version="2.0.1" />
     <PackageReference Include="CardboardBox.Redis" Version="2.0.4" />
     <PackageReference Include="CardboardBox.Setup" Version="2.0.0" />
+    <PackageReference Include="MangaDexSharp" Version="1.0.20" />
   </ItemGroup>
 
 	<ItemGroup>

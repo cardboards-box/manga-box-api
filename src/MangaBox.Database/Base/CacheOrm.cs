@@ -25,19 +25,19 @@ public abstract class CacheOrm<T> : Orm<T> where T : DbObject
         return await _cache.Get() ?? Array.Empty<T>();
     }
 
-    public override Task<Guid> Upsert(T item)
+    public override Task<long> Upsert(T item)
     {
         ClearCache();
         return base.Upsert(item);
     }
 
-    public override Task<int> Delete(Guid id)
+    public override Task<int> Delete(long id)
     {
         ClearCache();
         return base.Delete(id);
     }
 
-    public override Task<Guid> Insert(T item)
+    public override Task<long> Insert(T item)
     {
         ClearCache();
         return base.Insert(item);
