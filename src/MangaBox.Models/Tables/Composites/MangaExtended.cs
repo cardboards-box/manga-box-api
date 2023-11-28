@@ -4,16 +4,18 @@
 public class MangaExtended
 {
     [JsonPropertyName("manga")]
-    public DbManga Manga { get; set; }
+    public DbManga Manga { get; set; } = new();
 
     [JsonPropertyName("progress")]
     public DbMangaProgress? Progress { get; set; }
 
     [JsonPropertyName("chapter")]
-    public DbMangaChapter Chapter { get; set; }
+    public DbMangaChapter Chapter { get; set; } = new();
 
     [JsonPropertyName("stats")]
-    public MangaStats Stats { get; set; }
+    public MangaStats Stats { get; set; } = new();
+
+    public MangaExtended() { }
 
     public MangaExtended(
         DbManga manga,

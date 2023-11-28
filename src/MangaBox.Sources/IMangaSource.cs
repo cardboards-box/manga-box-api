@@ -1,4 +1,4 @@
-﻿namespace MangaBox.Sources.Base;
+﻿namespace MangaBox.Sources;
 
 public interface IMangaSource
 {

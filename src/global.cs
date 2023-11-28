@@ -14,6 +14,7 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 
+global using MangaBox;
 global using MangaBox.Core;
 global using MangaBox.Core.Migrations;
 global using MangaBox.Core.Requesting;

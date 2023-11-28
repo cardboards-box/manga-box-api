@@ -1,19 +1,22 @@
-﻿namespace MangaBox.Tests;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace MangaBox.Tests;
 
 using Core;
 using Sources;
 
 public static class TestHelper
 {
-    private static Task<IServiceProvider> GenerateProvider(Action<IDependencyResolver> configure)
+    private static async Task<IServiceProvider> GenerateProvider(Action<IDependencyResolver> configure)
     {
         var services = new ServiceCollection();
+        var config = new ConfigurationBuilder().Build();
 
         var bob = new DependencyResolver();
         configure(bob);
 
-        bob.RegisterServices(services);
-        return Task.FromResult<IServiceProvider>(services.BuildServiceProvider());
+        await bob.RegisterServices(services, config);
+        return services.BuildServiceProvider();
     }
 
     public static Task<IServiceProvider> ServiceProvider()

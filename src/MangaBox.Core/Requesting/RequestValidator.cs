@@ -93,7 +93,7 @@ public class RequestValidator
     /// <returns>The current validator for chaining</returns>
     public RequestValidator Between(int value, string property, int min, int max)
     {
-        validators.Add(new Validator(() => value > min && value < max, $"{property} must be between {min} and {max}"));
+        validators.Add(new Validator(() => value > min && value < max, $"{property} must be greater than {min} but less than {max}"));
         return this;
     }
 
@@ -133,7 +133,7 @@ public class RequestValidator
     /// <returns>The current validator for chaining</returns>
     public RequestValidator Between(double value, string property, double min, double max)
     {
-        validators.Add(new Validator(() => value > min && value < max, $"{property} must be between {min} and {max}"));
+        validators.Add(new Validator(() => value > min && value < max, $"{property} must be greater than {min} but less than {max}"));
         return this;
     }
 
@@ -158,6 +158,19 @@ public class RequestValidator
         foreach (var validator in validators)
             if (!validator.Valid())
                 yield return validator.Message;
+    }
+
+    /// <summary>
+    /// Whether or not the request is valid
+    /// </summary>
+    /// <param name="result">The request results to return if the request isn't valid</param>
+    /// <returns>Whether or not the request is valid</returns>
+    public bool IsValid(out RequestResult result)
+    {
+        var issues = Issues;
+
+        result = Requests.BadRequest(issues);
+        return issues.Length == 0;
     }
 
     /// <summary>

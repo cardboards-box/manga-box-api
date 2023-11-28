@@ -1,4 +1,4 @@
-CREATE TABLE profiles (
+CREATE TABLE IF NOT EXISTS profiles (
     id BIGSERIAL PRIMARY KEY,
 
     username text not null,

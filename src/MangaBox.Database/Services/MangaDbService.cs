@@ -2,40 +2,19 @@
 
 public interface IMangaDbService : IOrmMap<DbManga>
 {
-    /// <summary>
-    /// Fetch <see cref="DbManga"/> by either the <see cref="DbManga.Id"/> or <see cref="DbManga.HashId"/>
-    /// </summary>
-    /// <param name="id">The <see cref="DbManga.Id"/> or <see cref="DbManga.HashId"/></param>
-    /// <returns></returns>
     Task<DbManga?> Fetch(string id);
 
-    /// <summary>
-    /// Fetch <see cref="DbManga"/> by the <see cref="DbManga.HashId"/>
-    /// </summary>
-    /// <param name="hashId">The <see cref="DbManga.HashId"/></param>
-    /// <returns></returns>
     Task<DbManga?> FetchByHashId(string hashId);
 
-    /// <summary>
-    /// Fetch <see cref="DbManga"/> by the <see cref="DbManga.SourceId"/>
-    /// </summary>
-    /// <param name="sourceId">The <see cref="DbManga.SourceId"/></param>
-    /// <returns></returns>
     Task<DbManga?> FetchBySourceId(string sourceId);
 
-    /// <summary>
-    /// Gets the top <paramref name="count"/> <see cref="DbManga"/> by <see cref="DbManga.UpdatedAt"/>
-    /// </summary>
-    /// <param name="count">The top <paramref name="count"/></param>
-    /// <returns></returns>
     Task<DbManga[]> GetByUpdated(int count);
 
-    /// <summary>
-    /// Gets the top <paramref name="count"/> <see cref="DbManga"/> randomly
-    /// </summary>
-    /// <param name="count"The top <paramref name="count"/></param>
-    /// <returns></returns>
     Task<DbManga[]> GetByRandom(int count);
+
+    Task SetDisplayTitle(string id, string? title);
+
+    Task SetOrdinalReset(string id, bool reset);
 }
 
 internal class MangaDbService : Orm<DbManga>, IMangaDbService
@@ -74,5 +53,35 @@ internal class MangaDbService : Orm<DbManga>, IMangaDbService
     {
         const string QUERY = "SELECT * FROM manga ORDER BY random() LIMIT :count";
         return Get(QUERY, new { count });
+    }
+
+    public Task SetDisplayTitle(string id, string? title)
+    {
+        const string QUERY = @"UPDATE manga SET display_title = :title WHERE id = :id OR hash_id = :hashId";
+
+        long? mid = null;
+        string? hashId = id;
+        if (long.TryParse(id, out var m))
+        {
+            hashId = null;
+            mid = m;
+        }
+
+        return _sql.Execute(QUERY, new { id = mid, hashId, title });
+    }
+
+    public Task SetOrdinalReset(string id, bool reset)
+    {
+        const string QUERY = @"UPDATE manga SET ordinal_volume_reset = :reset WHERE id = :id OR hash_id = :hashId";
+
+        long? mid = null;
+        string? hashId = id;
+        if (long.TryParse(id, out var m))
+        {
+            hashId = null;
+            mid = m;
+        }
+
+        return _sql.Execute(QUERY, new { id = mid, hashId, reset });
     }
 }

@@ -1,3 +1,3 @@
-﻿namespace MangaBox.Sources.Base;
+﻿namespace MangaBox.Sources;
 
 public record class ResolvedManga(DbManga Manga, DbMangaChapter[] Chapters);

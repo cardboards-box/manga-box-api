@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<Compile Include="..\global.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.8" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.31.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.31.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\MangaBox.Models\MangaBox.Models.csproj" />
+	</ItemGroup>
+
+</Project>

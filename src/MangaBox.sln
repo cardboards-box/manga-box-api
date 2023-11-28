@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Sources", "MangaBo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Tests", "MangaBox.Tests\MangaBox.Tests.csproj", "{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Services", "MangaBox.Services\MangaBox.Services.csproj", "{9780678B-2911-4BB5-B2E0-D41C529B5386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Services.Reverse", "MangaBox.Services.Reverse\MangaBox.Services.Reverse.csproj", "{CA06887A-B53C-4EF9-96A2-A2E9F4424955}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaBox.Auth", "MangaBox.Auth\MangaBox.Auth.csproj", "{BF8C2C87-5593-43DE-B2A7-F2ED2E509C8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +51,18 @@ Global
 		{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CC8C59A-3E5F-428E-81F6-4C0B0A956042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9780678B-2911-4BB5-B2E0-D41C529B5386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9780678B-2911-4BB5-B2E0-D41C529B5386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9780678B-2911-4BB5-B2E0-D41C529B5386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9780678B-2911-4BB5-B2E0-D41C529B5386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA06887A-B53C-4EF9-96A2-A2E9F4424955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA06887A-B53C-4EF9-96A2-A2E9F4424955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA06887A-B53C-4EF9-96A2-A2E9F4424955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA06887A-B53C-4EF9-96A2-A2E9F4424955}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF8C2C87-5593-43DE-B2A7-F2ED2E509C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF8C2C87-5593-43DE-B2A7-F2ED2E509C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF8C2C87-5593-43DE-B2A7-F2ED2E509C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF8C2C87-5593-43DE-B2A7-F2ED2E509C8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

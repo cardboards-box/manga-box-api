@@ -8,6 +8,12 @@ public interface IDependencyResolver
 {
     IDependencyResolver AddServices(Action<IServiceCollection> services);
 
+    IDependencyResolver AddServices(Action<IServiceCollection, IConfiguration> services);
+
+    IDependencyResolver AddServices(Func<IServiceCollection, Task> services);
+
+    IDependencyResolver AddServices(Func<IServiceCollection, IConfiguration, Task> services);
+
     IDependencyResolver Model<T>();
 
     IDependencyResolver Type<T>(string? name = null);
@@ -30,12 +36,31 @@ public interface IDependencyResolver
 
 public class DependencyResolver : IDependencyResolver
 {
-    private readonly List<Action<IServiceCollection>> _services = new();
+    private readonly List<Func<IServiceCollection, IConfiguration, Task>> _services = new();
     private readonly List<Action<IConventionBuilder>> _conventions = new();
     private readonly List<Action<ITypeMapBuilder>> _dbMapping = new();
     private readonly List<Action<NpgsqlDataSourceBuilder>> _connections = new();
 
     public IDependencyResolver AddServices(Action<IServiceCollection> services)
+    {
+        return AddServices((s, _) => services(s));
+    }
+
+    public IDependencyResolver AddServices(Action<IServiceCollection, IConfiguration> services)
+    {
+        return AddServices((s, c) =>
+        {
+            services(s, c);
+            return Task.CompletedTask;
+        });
+    }
+
+    public IDependencyResolver AddServices(Func<IServiceCollection, Task> services)
+    {
+        return AddServices((s, _) => services(s));
+    }
+
+    public IDependencyResolver AddServices(Func<IServiceCollection, IConfiguration, Task> services)
     {
         _services.Add(services);
         return this;
@@ -81,7 +106,7 @@ public class DependencyResolver : IDependencyResolver
         return AddServices(x => x.AddSingleton(instance));
     }
 
-    public void RegisterServices(IServiceCollection services)
+    public async Task RegisterServices(IServiceCollection services, IConfiguration config)
     {
         services
             .AddJson(new JsonSerializerOptions
@@ -103,7 +128,7 @@ public class DependencyResolver : IDependencyResolver
             .AddRedis();
 
         foreach (var action in _services)
-            action(services);
+            await action(services, config);
     }
 
     public void RegisterDatabase(IServiceCollection services, string scriptDir)
@@ -134,9 +159,9 @@ public class DependencyResolver : IDependencyResolver
             });
     }
 
-    public void Build(IServiceCollection services, string scriptDir = "Scripts")
+    public Task Build(IServiceCollection services, IConfiguration config, string scriptDir = "Scripts")
     {
         RegisterDatabase(services, scriptDir);
-        RegisterServices(services);
+        return RegisterServices(services, config);
     }
 }

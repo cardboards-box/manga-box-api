@@ -1,7 +1,6 @@
 ﻿namespace MangaBox.Tests;
 
-using MangaBox.Sources;
-using Sources.ThirdParty;
+using Sources;
 
 [TestClass]
 public class SourcesTests

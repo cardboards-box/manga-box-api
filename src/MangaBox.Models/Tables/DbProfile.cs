@@ -12,7 +12,7 @@ public class DbProfile : DbObject
     [JsonPropertyName("platformId"), Column("platform_id", Unique = true)]
     public string PlatformId { get; set; } = "";
 
-    [JsonPropertyName("admin")]
+    [JsonPropertyName("admin"), Column(ExcludeUpdates = true)]
     public bool Admin { get; set; } = false;
 
     [JsonIgnore]

@@ -1,21 +1,23 @@
-CREATE OR REPLACE FUNCTION get_touched_manga(platformId text)
-    RETURNS TABLE (
-        manga_id BIGINT,
-        manga_chapter_id BIGINT,
-        first_chapter_id BIGINT,
-        progress_chapter_id BIGINT,
-        progress_id BIGINT,
-        max_chapter_num BIGINT,
-        chapter_num BIGINT,
-        page_count INT,
-        chapter_progress NUMERIC,
-        page_progress NUMERIC,
-        favourite BIT,
-        bookmarks INT[],
-        completed BIT
+CREATE OR REPLACE function get_touched_manga(platformid text)
+    RETURNS TABLE(
+        manga_id bigint, 
+        manga_chapter_id bigint, 
+        first_chapter_id bigint, 
+        progress_chapter_id bigint, 
+        progress_id bigint, 
+        max_chapter_num bigint, 
+        chapter_num bigint, 
+        page_count integer, 
+        chapter_progress numeric, 
+        page_progress numeric, 
+        favourite boolean, 
+        bookmarks integer[], 
+        has_bookmarks boolean, 
+        completed boolean
     )
-LANGUAGE plpgsql
-AS $$
+    LANGUAGE plpgsql
+AS
+$$
 BEGIN
  RETURN QUERY WITH touched_manga AS (
     SELECT DISTINCT m.*, p.id as profile_id FROM manga m
@@ -76,12 +78,18 @@ BEGIN
             END
         ) as chapter_progress,
         coalesce(round(mp.page_index / CAST(array_length(mc.pages, 1) as decimal), 2), 0) * 100 as page_progress,
-        CAST(coalesce((
-            SELECT 1
+        coalesce((
+            SELECT true
             FROM manga_favourites mf
             WHERE mf.profile_id = m.profile_id AND mf.manga_id = m.id
-        ), 0) AS BIT) as favourite,
-        coalesce(mb.pages, '{}') as bookmarks
+        ), false) as favourite,
+        coalesce(mb.pages, '{}') as bookmarks,
+        coalesce((
+            SELECT true
+            FROM manga_bookmarks mbc
+            WHERE mbc.manga_id = m.id
+            LIMIT 1
+        ), false) as has_bookmarks
     FROM touched_manga m
     LEFT JOIN progress mp ON mp.manga_id = m.id
     LEFT JOIN max_chapter_numbers mmc ON mmc.manga_id = m.id
@@ -90,13 +98,12 @@ BEGIN
         (mp.id IS NULL AND mmc.first_chapter_id = mc.id)
     LEFT JOIN manga_bookmarks mb ON mb.manga_chapter_id = mc.id
     WHERE
-        m.deleted_at IS NULL AND
-        mp.deleted_at IS NULL
+        m.deleted_at IS NULL
 )
 SELECT
     DISTINCT
     r.*,
-    CAST((CASE WHEN r.chapter_progress >= 100 THEN 1 ELSE 0 END) AS BIT) as completed
+    (CASE WHEN r.chapter_progress >= 100 THEN true ELSE false END) as completed
 FROM records r;
 END
 $$;

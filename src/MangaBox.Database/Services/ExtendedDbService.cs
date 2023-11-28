@@ -36,6 +36,12 @@ public interface IExtendedDbService
     /// <param name="size">The maximum size of returned records</param>
     /// <returns></returns>
     Task<PaginatedResult<MangaExtended>> Since(string? platformId, DateTime since, int page, int size);
+
+    /// <summary>
+    /// Updates all manga based computed tables
+    /// </summary>
+    /// <returns></returns>
+    Task UpdateComputed();
 }
 
 internal class ExtendedDbService : IExtendedDbService
@@ -156,5 +162,14 @@ DROP TABLE touched_manga;";
         var total = await rdr.ReadSingleAsync<int>();
         var pages = (int)Math.Ceiling((double)total / size);
         return new PaginatedResult<MangaExtended>(pages, total, results.ToArray());
+    }
+
+    /// <summary>
+    /// Updates all manga based computed tables
+    /// </summary>
+    /// <returns></returns>
+    public Task UpdateComputed()
+    {
+        return _sql.Execute("CALL update_computed()");
     }
 }
